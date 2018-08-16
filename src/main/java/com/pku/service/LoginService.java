@@ -14,10 +14,10 @@ import java.util.List;
 public interface LoginService {
 
     @Select("select * from userInfo where name =#{name} ")
-    @Results({
+   /* @Results({
             @Result(property = "name" , column = "name" )
-    })
-    List<UserInfo> loginAction( String name , String password);
+    })*/
+    UserInfo loginAction( String name );
 
 }
 
