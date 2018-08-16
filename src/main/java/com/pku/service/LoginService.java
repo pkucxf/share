@@ -19,6 +19,17 @@ public interface LoginService {
     })*/
     UserInfo loginAction( String name );
 
+
+    @Select("select * from userInfo where name =#{name} ")
+   /* @Results({
+            @Result(property = "name" , column = "name" )
+    })*/
+    UserInfo loginAction2( String name );
+
+
+    @Insert("insert into userInfo(userId,name) value (#{userId},#{name})")
+    boolean addUserAction(UserInfo userInfo);
+
 }
 
 
