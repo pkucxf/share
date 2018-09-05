@@ -13,11 +13,8 @@ import java.util.List;
 
 public interface LoginService {
 
-    @Select("select * from userInfo where name =#{name} ")
-   /* @Results({
-            @Result(property = "name" , column = "name" )
-    })*/
-    UserInfo loginAction( String name );
+    @Select("select * from userInfo where name =#{name}")
+    UserInfo loginAction( String name , String password  );
 
 
     @Select("select * from userInfo where name =#{name} ")
@@ -27,7 +24,7 @@ public interface LoginService {
     UserInfo loginAction2( String name );
 
 
-    @Insert("insert into userInfo(userId,name) value (#{userId},#{name})")
+    @Insert("insert into userInfo(userId,name,password,phone,sendAddress0) values (#{userId},#{name},#{password},#{phone},#{sendAddress0})")
     boolean addUserAction(UserInfo userInfo);
 
 }
