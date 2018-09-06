@@ -37,4 +37,18 @@ public class AdminController {
         return   new RespEntity(RespCode.SUCCESS, list);
     }
 
+    @RequestMapping(value="/addCarType",method = RequestMethod.POST)
+    @ResponseBody
+    public RespEntity addCarType(@RequestBody CarType carType){
+        Boolean result ;
+        result = adminService.addCarType(carType);
+        if(result){
+            return new RespEntity(RespCode.SUCCESS, "");
+        }else{
+            return new RespEntity(RespCode.WARN, "");
+        }
+
+    }
+
+
 }
