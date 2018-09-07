@@ -14,9 +14,6 @@ public class CarType {
     public String def4 ;
 
 
-   public int pageNo;
-   public int pageSize;
-
     public CarType() {
 
     }
@@ -35,8 +32,6 @@ public class CarType {
                 ", def2='" + def2 + '\'' +
                 ", def3='" + def3 + '\'' +
                 ", def4='" + def4 + '\'' +
-                ", pageNo=" + pageNo +
-                ", pageSize=" + pageSize +
                 '}';
     }
 
@@ -129,19 +124,4 @@ public class CarType {
         this.def4 = def4;
     }
 
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
 }

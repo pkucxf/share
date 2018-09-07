@@ -47,6 +47,18 @@ public class AdminController {
         }else{
             return new RespEntity(RespCode.WARN, "");
         }
+    }
+
+    @RequestMapping(value="/delCarType",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity delCarType(@Param("id") int id ){
+        Boolean b ;
+        b = adminService.delCarType(id);
+        if(b){
+            return   new RespEntity(RespCode.SUCCESS, "");
+        }else{
+            return   new RespEntity(RespCode.WARN, "");
+        }
 
     }
 

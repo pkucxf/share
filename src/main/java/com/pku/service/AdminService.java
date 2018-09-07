@@ -1,10 +1,7 @@
 package com.pku.service;
 
 import com.pku.domain.CarType;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,4 +16,7 @@ public interface AdminService {
 
     @Insert("insert cartypeinfo (carName , carProduce , carDrive ,carTypes,carSeat) values (#{carName} , #{carProduce} , #{carDrive} ,#{carTypes},#{carSeat}) ")
     Boolean addCarType(CarType carType);
+
+    @Delete("delete  from cartypeinfo where id = #{id}")
+    Boolean delCarType(int id);
 }
