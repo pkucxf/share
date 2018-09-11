@@ -7,6 +7,7 @@ public class CarType {
     public String carDrive ;
     public String carTypes ;
     public int carSeat ;
+    public String carMoney;
     public String def0 ;
     public String def1 ;
     public String def2 ;
@@ -16,23 +17,6 @@ public class CarType {
 
     public CarType() {
 
-    }
-
-    @Override
-    public String toString() {
-        return "CarType{" +
-                "id=" + id +
-                ", carName='" + carName + '\'' +
-                ", carProduce='" + carProduce + '\'' +
-                ", carDrive='" + carDrive + '\'' +
-                ", carTypes='" + carTypes + '\'' +
-                ", carSeat=" + carSeat +
-                ", def0='" + def0 + '\'' +
-                ", def1='" + def1 + '\'' +
-                ", def2='" + def2 + '\'' +
-                ", def3='" + def3 + '\'' +
-                ", def4='" + def4 + '\'' +
-                '}';
     }
 
 
@@ -84,6 +68,14 @@ public class CarType {
         this.carSeat = carSeat;
     }
 
+    public String getCarMoney() {
+        return carMoney;
+    }
+
+    public void setCarMoney(String carMoney) {
+        this.carMoney = carMoney;
+    }
+
     public String getDef0() {
         return def0;
     }
@@ -123,5 +115,4 @@ public class CarType {
     public void setDef4(String def4) {
         this.def4 = def4;
     }
-
 }
