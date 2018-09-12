@@ -22,11 +22,36 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @RequestMapping(value="/login",method = RequestMethod.POST)
+    @RequestMapping(value="/getUserInfo",method = RequestMethod.GET)
     @ResponseBody
-    public RespEntity login(@RequestBody CarType carType){
-        return   new RespEntity(RespCode.SUCCESS, "");
+    public RespEntity getUserInfo(){
+        List<UserInfo> list ;
+        list =  adminService.queryUserInfo();
+        return  new RespEntity(RespCode.SUCCESS, list);
     }
+
+    @RequestMapping(value="/delUser",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity delUser(@Param("id") int id ){
+        Boolean b  = adminService.delUserInfo(id);
+        if(b){
+            return   new RespEntity(RespCode.SUCCESS, "");
+        }else{
+            return   new RespEntity(RespCode.WARN, "");
+        }
+    }
+    @RequestMapping(value="/updateUser",method = RequestMethod.POST)
+    @ResponseBody
+    public RespEntity updateUser(@RequestBody UserInfo userInfo){
+        Boolean result ;
+        result = adminService.updateUserInfo(userInfo);
+        if(result){
+            return new RespEntity(RespCode.SUCCESS, "");
+        }else{
+            return new RespEntity(RespCode.WARN, "");
+        }
+    }
+
 
 
     @RequestMapping(value="/getCarType",method = RequestMethod.GET)
