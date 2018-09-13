@@ -1,7 +1,9 @@
 package com.pku.service;
 
 import com.pku.domain.CarType;
+import com.pku.domain.StoreInfo;
 import com.pku.domain.UserInfo;
+import org.apache.catalina.Store;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +31,14 @@ public interface AdminService {
 
     @Update("update userInfo set name=#{name},email=#{email},locked=#{locked},phone=#{phone} where userId=#{userId}")
     Boolean updateUserInfo(UserInfo userInfo);
+
+    @Select("select * from storeinfo")
+    List<StoreInfo> queryStore(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize);
+
+    @Insert("insert into storeinfo (storeId,storeName,storeAddress,storeStar,storePhone,storeAddressProvince,storeAddressCity,storeAddressArea)" +
+            " values(#{storeId},#{storeName},#{storeAddress},#{storeStar},#{storePhone},#{storeAddressProvince},#{storeAddressCity},#{storeAddressArea})")
+    Boolean addStore(StoreInfo storeInfo);
+
+    @Delete("delete  from storeinfo where storeId = #{id}")
+    Boolean delStore(String id);
 }

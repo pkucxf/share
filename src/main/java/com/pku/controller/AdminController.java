@@ -1,16 +1,12 @@
 package com.pku.controller;
 
 
-import com.pku.domain.CarType;
-import com.pku.domain.RespCode;
-import com.pku.domain.RespEntity;
-import com.pku.domain.UserInfo;
+import com.pku.domain.*;
 import com.pku.service.AdminService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -86,6 +82,41 @@ public class AdminController {
         }
 
     }
+
+
+    @RequestMapping(value="/getStore",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity getStore(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize){
+        List<StoreInfo> list2 ;
+        list2 = adminService.queryStore(pageNo,pageSize);
+        return   new RespEntity(RespCode.SUCCESS, list2);
+    }
+
+    @RequestMapping(value="/addStore",method = RequestMethod.POST)
+    @ResponseBody
+    public RespEntity addStore(@RequestBody StoreInfo storeInfo){
+        Boolean result ;
+        result = adminService.addStore(storeInfo);
+        if(result){
+            return new RespEntity(RespCode.SUCCESS, "");
+        }else{
+            return new RespEntity(RespCode.WARN, "");
+        }
+    }
+
+    @RequestMapping(value="/delStore",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity delStore(@Param("id") String id ){
+        Boolean b ;
+        b = adminService.delStore(id);
+        if(b){
+            return   new RespEntity(RespCode.SUCCESS, "");
+        }else{
+            return   new RespEntity(RespCode.WARN, "");
+        }
+
+    }
+
 
 
 }
