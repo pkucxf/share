@@ -1,5 +1,6 @@
 package com.pku.service;
 
+import com.pku.domain.CarAndStore;
 import com.pku.domain.CarType;
 import com.pku.domain.StoreInfo;
 import com.pku.domain.UserInfo;
@@ -41,4 +42,11 @@ public interface AdminService {
 
     @Delete("delete  from storeinfo where storeId = #{id}")
     Boolean delStore(String id);
+
+    @Select("select * from carandstoreinfo")
+    List<CarAndStore> queryCarAndStore(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize);
+
+    @Insert("insert into carandstoreinfo (storeId,storeName,carId,carName,carNum,carImg)" +
+            " values(#{storeId},#{storeName},#{carId},#{carName},#{carNum},#{carImg} )")
+    Boolean addCarAndStore(CarAndStore carAndStore);
 }
