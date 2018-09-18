@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -137,6 +139,18 @@ public class AdminController {
         }
     }
 
+
+    /**获取车辆列表**/
+    @RequestMapping(value="/getCarList",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity getCarList(){
+        List<CarType> list= adminService.queryCarList();
+        List list2 = new ArrayList();
+        for(int i= 0 ; i<list.size();i++){
+            list2.add(list.get(i).carName);
+        }
+        return   new RespEntity(RespCode.SUCCESS,list2);
+    }
 
 
 }
