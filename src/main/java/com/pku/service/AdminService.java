@@ -18,10 +18,11 @@ public interface AdminService {
     @Select("select * from cartypeinfo LIMIT #{pageNo},#{pageSize}")
     List<CarType> queryCarType(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize);
 
-    @Select("select carName from cartypeinfo ")
-    @Results(
+    @Select("select id , carName from cartypeinfo ")
+    @Results({
+            @Result(property ="id" ,column ="id"),
             @Result(property ="carName" ,column ="carName")
-    )
+    })
     List<CarType> queryCarList();
 
     @Insert("insert cartypeinfo (carName , carProduce , carDrive ,carTypes,carSeat) values (#{carName} , #{carProduce} , #{carDrive} ,#{carTypes},#{carSeat}) ")

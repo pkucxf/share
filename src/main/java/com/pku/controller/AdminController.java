@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -145,11 +146,15 @@ public class AdminController {
     @ResponseBody
     public RespEntity getCarList(){
         List<CarType> list= adminService.queryCarList();
-        List list2 = new ArrayList();
-        for(int i= 0 ; i<list.size();i++){
-            list2.add(list.get(i).carName);
+        List<Map<String ,Object>> list2 = new ArrayList<Map<String ,Object>>()  ;
+        for(int i=0 ; i<list.size(); i++){
+            Map<String ,Object> map = new HashMap<String ,Object>();
+            map.put("label",list.get(i).carName);
+            map.put("value",list.get(i).id);
+
+            list2.add(map);
         }
-        return   new RespEntity(RespCode.SUCCESS,list2);
+        return  new RespEntity(RespCode.SUCCESS,list2);
     }
 
 
