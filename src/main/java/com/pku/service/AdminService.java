@@ -25,11 +25,21 @@ public interface AdminService {
     })
     List<CarType> queryCarList();
 
-    @Insert("insert cartypeinfo (carName , carProduce , carDrive ,carTypes,carSeat) values (#{carName} , #{carProduce} , #{carDrive} ,#{carTypes},#{carSeat}) ")
+    @Select("select storeId,storeName from storeinfo")
+    @Results({
+            @Result(property ="storeId" ,column ="storeId"),
+            @Result(property ="storeName" ,column ="storeName")
+    })
+    List<StoreInfo> queryStoreList();
+
+    @Insert("insert cartypeinfo (carName , carProduce , carDrive ,carTypes,carSeat ,def0 ,img) values (#{carName} , #{carProduce} , #{carDrive} ,#{carTypes},#{carSeat},#{def0},#{img}) ")
     Boolean addCarType(CarType carType);
 
     @Delete("delete  from cartypeinfo where id = #{id}")
     Boolean delCarType(int id);
+
+    @Update("update cartypeinfo set carName =#{carName} , carProduce =#{carProduce},carDrive=#{carDrive}, carTypes =#{carTypes} ,carSeat=#{carSeat} ,def0 = #{def0} , img =#{img } where id=#{id}")
+    Boolean updateCarType(CarType carType);
 
     @Select("select * from userInfo")
     List<UserInfo> queryUserInfo();
@@ -53,7 +63,7 @@ public interface AdminService {
     @Select("select * from carandstoreinfo")
     List<CarAndStore> queryCarAndStore(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize);
 
-    @Insert("insert into carandstoreinfo (storeId,storeName,carId,carName,carNum,carImg)" +
-            " values(#{storeId},#{storeName},#{carId},#{carName},#{carNum},#{carImg} )")
+    @Insert("insert into carandstoreinfo (id,storeId,storeName,carId,carName,carNum,carImg)" +
+            "values(#{id},#{storeId},#{storeName},#{carId},#{carName},#{carNum},#{carImg} )")
     Boolean addCarAndStore(CarAndStore carAndStore);
 }

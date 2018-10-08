@@ -7,6 +7,8 @@ public class CarType {
     public String carDrive ;
     public String carTypes ;
     public int carSeat ;
+    public String img ;
+
     public String carMoney;
     public String def0 ;
     public String def1 ;
@@ -19,13 +21,14 @@ public class CarType {
 
     }
 
-    public CarType(int id, String carName, String carProduce, String carDrive, String carTypes, int carSeat, String carMoney, String def0, String def1, String def2, String def3, String def4) {
+    public CarType(int id, String carName, String carProduce, String carDrive, String carTypes, int carSeat, String img, String carMoney, String def0, String def1, String def2, String def3, String def4) {
         this.id = id;
         this.carName = carName;
         this.carProduce = carProduce;
         this.carDrive = carDrive;
         this.carTypes = carTypes;
         this.carSeat = carSeat;
+        this.img = img;
         this.carMoney = carMoney;
         this.def0 = def0;
         this.def1 = def1;
@@ -34,23 +37,14 @@ public class CarType {
         this.def4 = def4;
     }
 
-    @Override
-    public String toString() {
-        return "CarType{" +
-                "id=" + id +
-                ", carName='" + carName + '\'' +
-                ", carProduce='" + carProduce + '\'' +
-                ", carDrive='" + carDrive + '\'' +
-                ", carTypes='" + carTypes + '\'' +
-                ", carSeat=" + carSeat +
-                ", carMoney='" + carMoney + '\'' +
-                ", def0='" + def0 + '\'' +
-                ", def1='" + def1 + '\'' +
-                ", def2='" + def2 + '\'' +
-                ", def3='" + def3 + '\'' +
-                ", def4='" + def4 + '\'' +
-                '}';
+    public String getImg() {
+        return img;
     }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
 
     public int getId() {
         return id;

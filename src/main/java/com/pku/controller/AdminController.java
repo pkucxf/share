@@ -3,14 +3,13 @@ package com.pku.controller;
 
 import com.pku.domain.*;
 import com.pku.service.AdminService;
+import org.apache.catalina.Store;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -86,6 +85,18 @@ public class AdminController {
 
     }
 
+    @RequestMapping(value="/updateCarType",method = RequestMethod.POST)
+    @ResponseBody
+    public RespEntity updateCarType(@RequestBody CarType carType){
+        Boolean result ;
+        result = adminService.updateCarType(carType);
+        if(result){
+            return new RespEntity(RespCode.SUCCESS, "");
+        }else{
+            return new RespEntity(RespCode.WARN, "");
+        }
+    }
+
 
     @RequestMapping(value="/getStore",method = RequestMethod.GET)
     @ResponseBody
@@ -128,17 +139,19 @@ public class AdminController {
         return   new RespEntity(RespCode.SUCCESS, list2);
     }
 
-    @RequestMapping(value="/addCarAndStore",method = RequestMethod.POST)
+    @RequestMapping(value="/addCarAndStore",method = RequestMethod.POST,consumes = "application/json")
     @ResponseBody
     public RespEntity addCarAndStore(@RequestBody CarAndStore carAndStore){
         Boolean result ;
-        result = adminService.addCarAndStore(carAndStore);
-        if(result){
+
+        // result = adminService.addCarAndStore(carAndStore);
+        if(true){
             return new RespEntity(RespCode.SUCCESS, "");
         }else{
             return new RespEntity(RespCode.WARN, "");
         }
     }
+
 
 
     /**获取车辆列表**/
@@ -157,5 +170,20 @@ public class AdminController {
         return  new RespEntity(RespCode.SUCCESS,list2);
     }
 
+
+    /**获取店铺列表**/
+    @RequestMapping(value="/getStoreList",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity getStoreList(){
+        List<StoreInfo> list3= adminService.queryStoreList();
+        List<Map<String ,Object>> list4 = new ArrayList<Map<String ,Object>>()  ;
+        for(int i=0 ; i<list3.size(); i++){
+            Map<String ,Object> map = new HashMap<String ,Object>();
+            map.put("label",list3.get(i).storeName);
+            map.put("value",list3.get(i).storeId);
+            list4.add(map);
+        }
+        return  new RespEntity(RespCode.SUCCESS,list4);
+    }
 
 }

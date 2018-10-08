@@ -22,7 +22,7 @@ public class CommonController {
     @Autowired
     AdminService adminService;
 
-    @Value("${file.uploadFolder}")
+    @Value("${file.uploadFolder}/")
     private String uploadFolder;
 
 
