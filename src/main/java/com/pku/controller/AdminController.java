@@ -144,12 +144,14 @@ public class AdminController {
     public RespEntity addCarAndStore(@RequestBody CarAndStore carAndStore){
         Boolean result = false ;
         String storeName = carAndStore.getStoreName();
+        String storeId = carAndStore.getStoreId();
         List<Map<String,String>> carLists = carAndStore.getCarList();
         for(int i=0 ; i<carLists.size();i++){
-            //String id = carLists.get(i).get("id");
             String carName = carLists.get(i).get("carName");
+            String carId = String.valueOf(carLists.get(i).get("carId"));
+            String carPrice   = carLists.get(i).get("carPrice");
             int carNum = Integer.parseInt(carLists.get(i).get("carNum"));
-            result = adminService.addCarAndStore(storeName,carName,carNum);
+            result = adminService.addCarAndStore(storeName,storeId,carName,carId,carNum,carPrice);
         }
         if(result){
             return new RespEntity(RespCode.SUCCESS, "");
@@ -157,8 +159,18 @@ public class AdminController {
             return new RespEntity(RespCode.WARN, "");
         }
     }
-
-
+    //删除店铺关系车辆
+    @RequestMapping(value="/delCarAndStore",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity delCarAndStore(@Param("id") String id ){
+        Boolean b ;
+        b = adminService.delCarAndStore(id);
+        if(b){
+            return   new RespEntity(RespCode.SUCCESS, "");
+        }else{
+            return   new RespEntity(RespCode.WARN, "");
+        }
+    }
 
     /**获取车辆列表**/
     @RequestMapping(value="/getCarList",method = RequestMethod.GET)

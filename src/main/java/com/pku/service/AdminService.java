@@ -65,7 +65,11 @@ public interface AdminService {
 
     /*@Insert("insert into carandstoreinfo (id,storeId,storeName,carId,carName,carNum,carImg)" +
             "values(#{id},#{storeId},#{storeName},#{carId},#{carName},#{carNum},#{carImg} )")*/
-    @Insert("insert into carandstoreinfo (storeName,carName,carNum)" +
-            "values(#{storeName},#{carName},#{carNum} )")
-    Boolean addCarAndStore(@Param("storeName") String storeName, @Param("carName") String carName ,@Param("carNum") int carNum);
+    @Insert("insert into carandstoreinfo (storeName,storeId,carName,carId,carNum,def0)" +
+            "values(#{storeName},#{storeId},#{carName},#{carId},#{carNum},#{carPrice} )")
+    Boolean addCarAndStore(@Param("storeName") String storeName,@Param("storeId") String storeId,
+                           @Param("carName") String carName ,@Param("carId") String carId,@Param("carNum") int carNum, @Param("carPrice") String carPrice);
+
+    @Delete("delete from carandstoreinfo where id = #{id}")
+    Boolean delCarAndStore(String id );
 }
