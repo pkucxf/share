@@ -33,4 +33,20 @@ public class DrivingController {
         return  new RespEntity(RespCode.SUCCESS, list);
     }
 
+
+
+    @RequestMapping(value="/getCarInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity getCarInfo(String carId){
+        List<CarType> carTypes  =  drivingService.queryCarType(carId);
+        return  new RespEntity(RespCode.SUCCESS, carTypes.get(0));
+    }
+
+        @RequestMapping(value="/getStoreInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity getStoreInfo(String storeId){
+        List<StoreInfo> storeInfos = drivingService.queryStore(storeId);
+        return  new RespEntity(RespCode.SUCCESS, storeInfos.get(0));
+    }
+
 }

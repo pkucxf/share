@@ -19,4 +19,8 @@ public interface DrivingService {
 
     @Select("select * from cartypeinfo where id =#{id}")
     List<CarType>  queryCarType(@Param("id") String id );
+
+
+    @Select("select * from storeinfo where storeId = #{storeId}")
+    List<StoreInfo> queryStore(@Param("storeId") String storeId);
 }
