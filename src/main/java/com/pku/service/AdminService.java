@@ -63,7 +63,9 @@ public interface AdminService {
     @Select("select * from carandstoreinfo")
     List<CarAndStore> queryCarAndStore(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize);
 
-    @Insert("insert into carandstoreinfo (id,storeId,storeName,carId,carName,carNum,carImg)" +
-            "values(#{id},#{storeId},#{storeName},#{carId},#{carName},#{carNum},#{carImg} )")
-    Boolean addCarAndStore(CarAndStore carAndStore);
+    /*@Insert("insert into carandstoreinfo (id,storeId,storeName,carId,carName,carNum,carImg)" +
+            "values(#{id},#{storeId},#{storeName},#{carId},#{carName},#{carNum},#{carImg} )")*/
+    @Insert("insert into carandstoreinfo (storeName,carName,carNum)" +
+            "values(#{storeName},#{carName},#{carNum} )")
+    Boolean addCarAndStore(@Param("storeName") String storeName, @Param("carName") String carName ,@Param("carNum") int carNum);
 }

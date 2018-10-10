@@ -1,7 +1,9 @@
 package com.pku.domain;
 
+import java.util.List;
+
 public class CarAndStore {
-    public String id ;
+    public int id ;
     public String storeId;
     public String storeName;
     public int carNum;
@@ -10,6 +12,16 @@ public class CarAndStore {
     public String def0;
     public String def1;
     public String def2;
+
+    public List<CarList> carList;
+
+    public List getCarList() {
+        return carList;
+    }
+
+    public void setCarList(List carList) {
+        this.carList = carList;
+    }
 
     public CarAndStore() {
     }
@@ -22,11 +34,11 @@ public class CarAndStore {
         this.storeName = storeName;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
