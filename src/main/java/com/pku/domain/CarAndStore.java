@@ -7,6 +7,7 @@ public class CarAndStore {
     public String storeId;
     public String storeName;
     public int carNum;
+    public String carId;
     public String carName ;
     public String carImg;
     public String def0;
@@ -17,6 +18,14 @@ public class CarAndStore {
 
     public List getCarList() {
         return carList;
+    }
+
+    public String getCarId() {
+        return carId;
+    }
+
+    public void setCarId(String carId) {
+        this.carId = carId;
     }
 
     public void setCarList(List carList) {
