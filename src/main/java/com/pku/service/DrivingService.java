@@ -23,4 +23,8 @@ public interface DrivingService {
 
     @Select("select * from storeinfo where storeId = #{storeId}")
     List<StoreInfo> queryStore(@Param("storeId") String storeId);
+
+
+    @Select("select def0 from carandstoreinfo where id = #{id}")
+    String queryPrice(@Param("id") int id );
 }

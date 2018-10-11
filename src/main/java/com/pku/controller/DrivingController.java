@@ -37,8 +37,10 @@ public class DrivingController {
 
     @RequestMapping(value="/getCarInfo",method = RequestMethod.GET)
     @ResponseBody
-    public RespEntity getCarInfo(String carId){
+    public RespEntity getCarInfo(String carId ,int id ){
         List<CarType> carTypes  =  drivingService.queryCarType(carId);
+        String price = drivingService.queryPrice(id);
+        carTypes.get(0).setDef1(price);
         return  new RespEntity(RespCode.SUCCESS, carTypes.get(0));
     }
 
