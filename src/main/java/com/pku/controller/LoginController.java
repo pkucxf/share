@@ -5,6 +5,7 @@ import com.pku.domain.RespCode;
 import com.pku.domain.RespEntity;
 import com.pku.domain.UserInfo;
 import com.pku.service.LoginService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import java.util.*;
 @CrossOrigin
 @RestController
 
-@RequestMapping({"/web"})
+@RequestMapping({"/user"})
 public class LoginController {
 
     @Autowired
@@ -23,35 +24,16 @@ public class LoginController {
 
     @RequestMapping(value="/login",method = RequestMethod.POST)
     @ResponseBody
-    public RespEntity login(@RequestBody UserInfo  userInfo1){
-        UserInfo userInfo = loginService.loginAction(userInfo1.getName(),userInfo1.getPassword());
-        Integer i = userInfo.getUserId();
-        Map result = new HashMap();
-        if(i == null ){
-            return new RespEntity(RespCode.WARN, result);
+    public RespEntity login(@RequestBody UserInfo  user){
+        Boolean result = loginService.loginAction(user);
+        if(result){
+            return new RespEntity(RespCode.SUCCESS, "");
         }else{
-            result.put("name",userInfo.getName());
-            result.put("locked",userInfo.getLocked());
-            return new RespEntity(RespCode.SUCCESS, result);
+            return new RespEntity(RespCode.WARN, "");
         }
     }
 
 
-   /*
-    @CrossOrigin
-    @RequestMapping(value="/login2",method = RequestMethod.POST)
-    @ResponseBody
-    public RespEntity login2(UserInfo userInfo){
-        UserInfo userInfo1 = loginService.loginAction2(userInfo.getName());
-        Map map = new HashMap();
-        if(userInfo1.getPhone() != ""){
-            map.put("name",userInfo1.getName());
-        }else{
-            map.put("name",null);
-        }
-        return new RespEntity(RespCode.SUCCESS, map);
-    }
-*/
 
     @RequestMapping(value ="/register" , method = RequestMethod.POST)
     @ResponseBody
@@ -67,6 +49,18 @@ public class LoginController {
             return new RespEntity(RespCode.WARN,"");
         }
     }
+
+    @RequestMapping(value="/hasUser" , method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity hasUser(@Param("name") String name){
+        List<UserInfo> u = loginService.hasUser(name);
+        if(u.size() >0 ){
+            return new RespEntity(RespCode.SUCCESS,-1);
+        }else {
+            return new RespEntity(RespCode.SUCCESS,0);
+        }
+    }
+
 
     public static String getUUID(){
         UUID uuid=UUID.randomUUID();
