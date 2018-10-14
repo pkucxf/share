@@ -27,7 +27,7 @@ public class LoginController {
     public RespEntity login(@RequestBody UserInfo  user){
         Boolean result = loginService.loginAction(user);
         if(result){
-            return new RespEntity(RespCode.SUCCESS, "");
+            return new RespEntity(RespCode.SUCCESS, user.getUserId());
         }else{
             return new RespEntity(RespCode.WARN, "");
         }
@@ -44,7 +44,7 @@ public class LoginController {
         if(bool){
             userInfo.setLocked(0);
             userInfo.setRegisterTime(sf.format(new Date()));
-            return new RespEntity(RespCode.SUCCESS,"");
+            return new RespEntity(RespCode.SUCCESS,userInfo.getUserId());
         }else {
             return new RespEntity(RespCode.WARN,"");
         }
