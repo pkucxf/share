@@ -14,7 +14,7 @@ import java.util.List;
 public interface LoginService {
 
     @Select("select * from userInfo where name =#{name} and password =#{password} ")
-    boolean loginAction(UserInfo userInfo );
+    List<UserInfo> loginAction(@Param("name") String name , @Param("password") String password );
 
 
     @Insert("insert into userInfo(userId,name,password,phone,sendAddress0) values (#{userId},#{name},#{password},#{phone},#{sendAddress0})")

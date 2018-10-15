@@ -25,11 +25,13 @@ public class LoginController {
     @RequestMapping(value="/login",method = RequestMethod.POST)
     @ResponseBody
     public RespEntity login(@RequestBody UserInfo  user){
-        Boolean result = loginService.loginAction(user);
-        if(result){
-            return new RespEntity(RespCode.SUCCESS, user.getUserId());
-        }else{
+        Boolean result = false;
+        List<UserInfo> userInfos =  loginService.loginAction(user.getName(),user.getPassword());
+        int userId  = userInfos.get(0).getUserId();
+        if((userId+"").equals("")){
             return new RespEntity(RespCode.WARN, "");
+        }else{
+            return new RespEntity(RespCode.SUCCESS,userId);
         }
     }
 
