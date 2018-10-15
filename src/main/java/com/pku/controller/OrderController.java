@@ -30,15 +30,10 @@ public class OrderController {
 
     }
 
-/*
-
-    @RequestMapping(value="/getCarList",method = RequestMethod.GET)
+    @RequestMapping(value="queryOrderByUserId",method = RequestMethod.GET)
     @ResponseBody
-    public RespEntity getCarList(){
-        List<CarType> list ;
-        list =  carService.queryCarList();
-        return  new RespEntity(RespCode.SUCCESS, list);
+    public RespEntity queryOrderByUserId(){
+        return new RespEntity(RespCode.SUCCESS, "");
     }
-*/
 
 }
