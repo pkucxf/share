@@ -24,6 +24,8 @@ public interface LoginService {
     @Select("select *  from userInfo where name = #{name}")
     List<UserInfo> hasUser(@Param("name") String name);
 
+    @Update("update userInfo set password = #{newPassword} where userId = #{userId} and password =#{password}")
+    boolean updatePassword(UserInfo userInfo);
 }
 
 

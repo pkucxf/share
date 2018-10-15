@@ -36,7 +36,15 @@ public class UserInfo implements Serializable {
     public String def1 ;
     public String def2 ;
     public String registerTime ;
+    public String newPassword;
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 
     public int getUserId() {
         return userId;

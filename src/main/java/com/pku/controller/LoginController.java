@@ -52,6 +52,20 @@ public class LoginController {
         }
     }
 
+
+    @RequestMapping(value="/update",method = RequestMethod.POST)
+    @ResponseBody
+    public RespEntity update(@RequestBody UserInfo userInfo){
+
+        boolean b = loginService.updatePassword(userInfo);
+        if(b){
+            return new RespEntity(RespCode.SUCCESS,0);
+        }else{
+            return new RespEntity(RespCode.SUCCESS,-1);
+        }
+
+    }
+
     @RequestMapping(value="/hasUser" , method = RequestMethod.GET)
     @ResponseBody
     public RespEntity hasUser(@Param("name") String name){
@@ -64,11 +78,6 @@ public class LoginController {
     }
 
 
-    public static String getUUID(){
-        UUID uuid=UUID.randomUUID();
-        String str = uuid.toString();
-        String uuidStr=str.replace("-", "");
-        return uuidStr;
-    }
+
 
 }
