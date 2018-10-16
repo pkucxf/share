@@ -6,6 +6,7 @@ import com.pku.domain.RespEntity;
 import com.pku.domain.UserInfo;
 import com.pku.service.CarService;
 import com.pku.service.LoginService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,4 +29,12 @@ public class CarController {
         return  new RespEntity(RespCode.SUCCESS, list);
     }
 
+
+    @RequestMapping(value="/getCarListById",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity getCarListById(@Param("id") int id ){
+        List<CarType> list ;
+        list =  carService.queryCarListById(id);
+        return  new RespEntity(RespCode.SUCCESS, list);
+    }
 }

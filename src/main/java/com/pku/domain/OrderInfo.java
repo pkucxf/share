@@ -1,5 +1,7 @@
 package com.pku.domain;
 
+import java.util.List;
+
 public class OrderInfo {
     public int id ;
     public int carId ;
@@ -15,6 +17,24 @@ public class OrderInfo {
     public String def0;
     public String def1;
     public String def2;
+    public List<StoreInfo> storeInfos ;
+    public List<CarType> carTypes;
+
+    public List<StoreInfo> getStoreInfos() {
+        return storeInfos;
+    }
+
+    public void setStoreInfos(List<StoreInfo> storeInfos) {
+        this.storeInfos = storeInfos;
+    }
+
+    public List<CarType> getCarTypes() {
+        return carTypes;
+    }
+
+    public void setCarTypes(List<CarType> carTypes) {
+        this.carTypes = carTypes;
+    }
 
     public int getDay() {
         return day;

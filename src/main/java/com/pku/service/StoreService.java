@@ -16,4 +16,7 @@ public interface StoreService {
     @Select("select * from storeinfo")
     List<StoreInfo> queryStoreInfo();
 
+    @Select("select * from storeinfo where storeId = #{storeId}")
+    List<StoreInfo> queryStoreInfoById(@Param("storeId") String storeId);
+
 }
