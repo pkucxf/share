@@ -15,6 +15,9 @@ public interface AdminService {
     @Select("select * from adminUserInfo where userName = #{userName} and password = #{password}")
     List<AdminUserInfo> queryAdminUser(AdminUserInfo adminUserInfo);
 
+    @Select("select storeId from storeInfo where userName = #{userName}")
+    String queryStoreInfo(@Param("userName") String userName );
+
 
     @Select("select * from cartypeinfo LIMIT #{pageNo},#{pageSize}")
     List<CarType> queryCarType(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize);
@@ -81,11 +84,18 @@ public interface AdminService {
     @Select ("select * from adminUserInfo where userName = #{userName}")
     List<AdminUserInfo> selectUser(@Param("userName") String userName );
 
-    @Select("select * from orderInfo")
+    @Select("select * from orderInfo order by orderTime desc")
     List<OrderInfo> queryAllOrderList();
 
-    @Select("select * from orderInfo")
-    List<OrderInfo> queryOrderListByStoreId();
+    @Select("select * from orderInfo where payStatu=#{payStatu} order by orderTime desc")
+    List<OrderInfo> queryAllOrderByPaystatu(@Param("payStatu") int payStatu );
+
+    @Select("select * from orderInfo where payStatu=#{payStatu} and storeId =#{storeId} order by orderTime desc")
+    List<OrderInfo> queryAllOrderByPaystatu2(@Param("payStatu") int payStatu , @Param("storeId")  String storeId);
+
+    @Select("select * from orderInfo where  storeId = #{storeId} order by orderTime desc")
+    List<OrderInfo> queryAllOrderByStoreId( @Param("storeId") String storeId);
+
 
     @Select("select * from storeinfo where storeId = #{storeId}")
     List<StoreInfo> queryStoreInfoById(@Param("storeId") String storeId);

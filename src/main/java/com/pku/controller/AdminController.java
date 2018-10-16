@@ -28,9 +28,11 @@ public class AdminController {
     public RespEntity userLogin(@RequestBody AdminUserInfo adminUserInfo){
         List<AdminUserInfo>  aUser = adminService.queryAdminUser(adminUserInfo);
         if(aUser.size()>0){
+           String storeId =  adminService.queryStoreInfo(aUser.get(0).userName);
             Map map = new HashMap();
             map.put("id",aUser.get(0).id);
             map.put("type",aUser.get(0).userType);
+            map.put("storeId",storeId);
             return new RespEntity(RespCode.SUCCESS, map);
         }else{
             return new RespEntity(RespCode.WARN, "");
@@ -231,22 +233,37 @@ public class AdminController {
     /**查询订单列表**/
     @RequestMapping(value="/getOrderList",method = RequestMethod.GET)
     @ResponseBody
-    public RespEntity getOrderList(@Param("userId") int userId ,@Param("userType") int userType){
+    public RespEntity getOrderList(@Param("userId") int userId ,@Param("userType") int userType , @Param("payStatu") int payStatu , @Param("storeId") String storeId){
         // userType : 1  管理员   0  商户
-        if(userType == 1){
-            List<OrderInfo>  allOrder = adminService.queryAllOrderList();
-            for(int i=0 ; i< allOrder.size();i++){
-                List<StoreInfo> storeInfos  = adminService.queryStoreInfoById(allOrder.get(i).storeId);
-                List<CarType> car = adminService.queryCarListById(allOrder.get(i).carId );
-                allOrder.get(i).setStoreInfos(storeInfos);
-                allOrder.get(i).setCarTypes(car);
+        payStatu = payStatu -1 ;
+        List<OrderInfo>  allOrder;
+        if(payStatu < 0 ){
+            if(userType == 1){
+                allOrder = adminService.queryAllOrderList();
+            }else{
+                allOrder = adminService.queryAllOrderByStoreId(storeId);
             }
-            return new RespEntity(RespCode.SUCCESS, allOrder);
         }else{
-
-
-            return new RespEntity(RespCode.SUCCESS, "");
+            if(userType ==1 ){
+                allOrder = adminService.queryAllOrderByPaystatu(payStatu);
+            }else{
+                 allOrder = adminService.queryAllOrderByPaystatu2(payStatu,storeId);
+            }
         }
+        for(int i=0 ; i< allOrder.size();i++){
+            List<StoreInfo> storeInfos  = adminService.queryStoreInfoById(allOrder.get(i).storeId);
+            List<CarType> car = adminService.queryCarListById(allOrder.get(i).carId );
+            allOrder.get(i).setStoreInfos(storeInfos);
+            allOrder.get(i).setCarTypes(car);
+        }
+        return new RespEntity(RespCode.SUCCESS, allOrder);
+
+       /* if(userType == 1){
+
+        }else{
+            List ln = new ArrayList();
+            return new RespEntity(RespCode.SUCCESS, ln);
+        }*/
     }
 
     /**确认订单**/
@@ -261,6 +278,10 @@ public class AdminController {
             return new RespEntity(RespCode.WARN, "");
         }
     }
+
+
+
+
 
 
 
