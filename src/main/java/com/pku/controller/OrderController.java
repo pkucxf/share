@@ -25,8 +25,7 @@ public class OrderController {
     @RequestMapping(value="/addOrder",method = RequestMethod.POST)
     @ResponseBody
     public RespEntity addOrder(@RequestBody OrderInfo orderInfo){
-        Boolean result ;
-        result  = orderService.addOrder(orderInfo);
+        Boolean  result  = orderService.addOrder(orderInfo);
         if(result){
             return new RespEntity(RespCode.SUCCESS, "");
         }else{

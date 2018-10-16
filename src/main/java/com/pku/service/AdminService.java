@@ -73,4 +73,27 @@ public interface AdminService {
 
     @Delete("delete from carandstoreinfo where id = #{id}")
     Boolean delCarAndStore(String id );
+
+
+    @Insert("insert into adminUserInfo (userName,password,userType) values (#{userName},#{password},1) ")
+    Boolean insertToAdmin(@Param("userName") String userName , @Param("password") String password);
+
+    @Select ("select * from adminUserInfo where userName = #{userName}")
+    List<AdminUserInfo> selectUser(@Param("userName") String userName );
+
+    @Select("select * from orderInfo")
+    List<OrderInfo> queryAllOrderList();
+
+    @Select("select * from orderInfo")
+    List<OrderInfo> queryOrderListByStoreId();
+
+    @Select("select * from storeinfo where storeId = #{storeId}")
+    List<StoreInfo> queryStoreInfoById(@Param("storeId") String storeId);
+
+
+    @Select("select *  from cartypeinfo where id = #{id}")
+    List<CarType> queryCarListById(@Param("id") int id );
+
+    @Update("update orderInfo set payStatu = #{payStatu} where id = #{id}")
+    Boolean sureOrder(@Param("payStatu") int payStatu , @Param("id") int id ) ;
 }

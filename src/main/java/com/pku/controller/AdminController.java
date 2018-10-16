@@ -3,6 +3,9 @@ package com.pku.controller;
 
 import com.pku.domain.*;
 import com.pku.service.AdminService;
+import com.pku.service.CarService;
+import com.pku.service.OrderService;
+import com.pku.service.StoreService;
 import org.apache.catalina.Store;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,10 +129,15 @@ public class AdminController {
     public RespEntity addStore(@RequestBody StoreInfo storeInfo){
         Boolean result ;
         result = adminService.addStore(storeInfo);
+        // 创建店铺管理客户端登陆名和密码，初始密码000000
+        List<AdminUserInfo> ad =  adminService.selectUser(storeInfo.getStorePhone());
+        if(ad.size() == 0){
+            adminService.insertToAdmin(storeInfo.getStorePhone(),"000000");
+        }
         if(result){
-            return new RespEntity(RespCode.SUCCESS, "");
+            return new RespEntity(RespCode.SUCCESS, 0);
         }else{
-            return new RespEntity(RespCode.WARN, "");
+            return new RespEntity(RespCode.WARN, -1);
         }
     }
 
@@ -218,5 +226,44 @@ public class AdminController {
         }
         return  new RespEntity(RespCode.SUCCESS,list4);
     }
+
+
+    /**查询订单列表**/
+    @RequestMapping(value="/getOrderList",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity getOrderList(@Param("userId") int userId ,@Param("userType") int userType){
+        // userType : 1  管理员   0  商户
+        if(userType == 1){
+            List<OrderInfo>  allOrder = adminService.queryAllOrderList();
+            for(int i=0 ; i< allOrder.size();i++){
+                List<StoreInfo> storeInfos  = adminService.queryStoreInfoById(allOrder.get(i).storeId);
+                List<CarType> car = adminService.queryCarListById(allOrder.get(i).carId );
+                allOrder.get(i).setStoreInfos(storeInfos);
+                allOrder.get(i).setCarTypes(car);
+            }
+            return new RespEntity(RespCode.SUCCESS, allOrder);
+        }else{
+
+
+            return new RespEntity(RespCode.SUCCESS, "");
+        }
+    }
+
+    /**确认订单**/
+    @RequestMapping(value="/sureOrder",method = RequestMethod.GET)
+    @ResponseBody
+    public RespEntity sureOrder(@Param("userId") int id){
+        int payStatu =1  ;
+        Boolean bool =adminService.sureOrder(payStatu,id);
+        if(bool){
+            return new RespEntity(RespCode.SUCCESS, "");
+        }else {
+            return new RespEntity(RespCode.WARN, "");
+        }
+    }
+
+
+
+
 
 }
