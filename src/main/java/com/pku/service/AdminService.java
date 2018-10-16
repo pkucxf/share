@@ -1,9 +1,6 @@
 package com.pku.service;
 
-import com.pku.domain.CarAndStore;
-import com.pku.domain.CarType;
-import com.pku.domain.StoreInfo;
-import com.pku.domain.UserInfo;
+import com.pku.domain.*;
 import org.apache.catalina.Store;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Service;
@@ -14,6 +11,10 @@ import java.util.Map;
 @Mapper
 @Service
 public interface AdminService {
+
+    @Select("select * from adminUserInfo where userName = #{userName} and password = #{password}")
+    List<AdminUserInfo> queryAdminUser(AdminUserInfo adminUserInfo);
+
 
     @Select("select * from cartypeinfo LIMIT #{pageNo},#{pageSize}")
     List<CarType> queryCarType(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize);

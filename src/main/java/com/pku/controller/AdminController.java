@@ -20,6 +20,21 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
+    @RequestMapping(value="/userLogin",method = RequestMethod.POST)
+    @ResponseBody
+    public RespEntity userLogin(@RequestBody AdminUserInfo adminUserInfo){
+        List<AdminUserInfo>  aUser = adminService.queryAdminUser(adminUserInfo);
+        if(aUser.size()>0){
+            Map map = new HashMap();
+            map.put("id",aUser.get(0).id);
+            map.put("type",aUser.get(0).userType);
+            return new RespEntity(RespCode.SUCCESS, map);
+        }else{
+            return new RespEntity(RespCode.WARN, "");
+        }
+    }
+
+
     @RequestMapping(value="/getUserInfo",method = RequestMethod.GET)
     @ResponseBody
     public RespEntity getUserInfo(){
