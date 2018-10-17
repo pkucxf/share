@@ -27,7 +27,7 @@ public class AdminController {
     @ResponseBody
     public RespEntity userLogin(@RequestBody AdminUserInfo adminUserInfo){
         List<AdminUserInfo>  aUser = adminService.queryAdminUser(adminUserInfo);
-        if(aUser.size()>0){
+            if(aUser.size()>0){
            String storeId =  adminService.queryStoreInfo(aUser.get(0).userName);
             Map map = new HashMap();
             map.put("id",aUser.get(0).id);

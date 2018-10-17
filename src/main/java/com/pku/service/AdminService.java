@@ -15,7 +15,7 @@ public interface AdminService {
     @Select("select * from adminUserInfo where userName = #{userName} and password = #{password}")
     List<AdminUserInfo> queryAdminUser(AdminUserInfo adminUserInfo);
 
-    @Select("select storeId from storeInfo where userName = #{userName}")
+    @Select("select storeId from storeInfo where storePhone = #{userName}")
     String queryStoreInfo(@Param("userName") String userName );
 
 
