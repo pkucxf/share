@@ -23,4 +23,7 @@ public interface OrderService {
     @Select("select * from orderInfo where userId =#{userId}")
     List<OrderInfo> queryOrderByUserId(@Param("userId") int userId);
 
+    @Select("select * from orderInfo where userId =#{userId} and payStatu = #{payStatu}")
+    List<OrderInfo> queryOrderByUserIdAndPayStatu(@Param("userId") int userId,@Param("payStatu") int payStatu);
+
 }

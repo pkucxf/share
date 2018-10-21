@@ -36,8 +36,15 @@ public class OrderController {
 
     @RequestMapping(value="queryOrderByUserId",method = RequestMethod.GET)
     @ResponseBody
-    public RespEntity queryOrderByUserId(@Param("userId") int userId){
-        List<OrderInfo> orderList  = orderService.queryOrderByUserId(userId);
+    public RespEntity queryOrderByUserId(@Param("userId") int userId , @Param("payStatu") int payStatu){
+
+        List<OrderInfo> orderList  ;
+        if(payStatu == 0 ){
+            orderList = orderService.queryOrderByUserId(userId);
+        }else{
+            orderList = orderService.queryOrderByUserIdAndPayStatu(userId,payStatu-1);
+        }
+
         for(int i=0;i<orderList.size();i++){
             List<StoreInfo> storeInfos  = storeService.queryStoreInfoById(orderList.get(i).storeId);
             List<CarType> carTypes = carService.queryCarListById(orderList.get(i).carId );
