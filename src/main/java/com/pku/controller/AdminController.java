@@ -6,6 +6,7 @@ import com.pku.service.AdminService;
 import com.pku.service.CarService;
 import com.pku.service.OrderService;
 import com.pku.service.StoreService;
+import com.pku.util.Base64;
 import org.apache.catalina.Store;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +28,22 @@ public class AdminController {
     @ResponseBody
     public RespEntity userLogin(@RequestBody AdminUserInfo adminUserInfo){
         List<AdminUserInfo>  aUser = adminService.queryAdminUser(adminUserInfo);
+        try {
+            adminUserInfo.setPassword( new String(Base64.decode(adminUserInfo.getPassword()),"UTF-8"));
             if(aUser.size()>0){
-           String storeId =  adminService.queryStoreInfo(aUser.get(0).userName);
-            Map map = new HashMap();
-            map.put("id",aUser.get(0).id);
-            map.put("type",aUser.get(0).userType);
-            map.put("storeId",storeId);
-            return new RespEntity(RespCode.SUCCESS, map);
-        }else{
+                String storeId =  adminService.queryStoreInfo(aUser.get(0).userName);
+                Map map = new HashMap();
+                map.put("id",aUser.get(0).id);
+                map.put("type",aUser.get(0).userType);
+                map.put("storeId",storeId);
+                return new RespEntity(RespCode.SUCCESS, map);
+            }else{
+                return new RespEntity(RespCode.WARN, "");
+            }
+        }catch (Exception e){
             return new RespEntity(RespCode.WARN, "");
         }
+
     }
 
 
