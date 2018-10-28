@@ -101,6 +101,10 @@ public interface AdminService {
     List<StoreInfo> queryStoreInfoById(@Param("storeId") String storeId);
 
 
+    @Select("select * from storeinfo where storePhone = #{storePhone}")
+    List<StoreInfo> queryStoreInfoByPhone(@Param("storePhone") String storePhone);
+
+
     @Select("select *  from cartypeinfo where id = #{id}")
     List<CarType> queryCarListById(@Param("id") int id );
 

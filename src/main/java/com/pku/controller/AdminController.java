@@ -27,9 +27,9 @@ public class AdminController {
     @RequestMapping(value="/userLogin",method = RequestMethod.POST)
     @ResponseBody
     public RespEntity userLogin(@RequestBody AdminUserInfo adminUserInfo){
-        List<AdminUserInfo>  aUser = adminService.queryAdminUser(adminUserInfo);
         try {
             adminUserInfo.setPassword( new String(Base64.decode(adminUserInfo.getPassword()),"UTF-8"));
+            List<AdminUserInfo>  aUser = adminService.queryAdminUser(adminUserInfo);
             if(aUser.size()>0){
                 String storeId =  adminService.queryStoreInfo(aUser.get(0).userName);
                 Map map = new HashMap();
@@ -240,10 +240,12 @@ public class AdminController {
     /**查询订单列表**/
     @RequestMapping(value="/getOrderList",method = RequestMethod.GET)
     @ResponseBody
-    public RespEntity getOrderList(@Param("userId") int userId ,@Param("userType") int userType , @Param("payStatu") int payStatu , @Param("storeId") String storeId){
+    public RespEntity getOrderList(@Param("userId") int userId ,@Param("userType") int userType , @Param("payStatu") int payStatu , @Param("storePhone") String storePhone){
         // userType : 1  管理员   0  商户
         payStatu = payStatu -1 ;
         List<OrderInfo>  allOrder;
+        List<StoreInfo> storeInfos  = adminService.queryStoreInfoByPhone(storePhone);
+        String storeId =  storeInfos.get(0).storeId;
         if(payStatu < 0 ){
             if(userType == 1){
                 allOrder = adminService.queryAllOrderList();
@@ -258,7 +260,7 @@ public class AdminController {
             }
         }
         for(int i=0 ; i< allOrder.size();i++){
-            List<StoreInfo> storeInfos  = adminService.queryStoreInfoById(allOrder.get(i).storeId);
+
             List<CarType> car = adminService.queryCarListById(allOrder.get(i).carId );
             allOrder.get(i).setStoreInfos(storeInfos);
             allOrder.get(i).setCarTypes(car);
