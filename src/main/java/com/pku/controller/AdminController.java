@@ -240,39 +240,34 @@ public class AdminController {
     /**查询订单列表**/
     @RequestMapping(value="/getOrderList",method = RequestMethod.GET)
     @ResponseBody
-    public RespEntity getOrderList(@Param("userId") int userId ,@Param("userType") int userType , @Param("payStatu") int payStatu , @Param("storePhone") String storePhone){
+    public RespEntity getOrderList(@Param("userId") int userId ,@Param("userType") int userType , @Param("payStatu") int payStatu , @Param("storePhone ") String storePhone){
         // userType : 1  管理员   0  商户
         payStatu = payStatu -1 ;
         List<OrderInfo>  allOrder;
-        List<StoreInfo> storeInfos  = adminService.queryStoreInfoByPhone(storePhone);
-        String storeId =  storeInfos.get(0).storeId;
-        if(payStatu < 0 ){
-            if(userType == 1){
+        if(userType == 1){
+            if(payStatu<0){
                 allOrder = adminService.queryAllOrderList();
             }else{
-                allOrder = adminService.queryAllOrderByStoreId(storeId);
-            }
-        }else{
-            if(userType ==1 ){
                 allOrder = adminService.queryAllOrderByPaystatu(payStatu);
-            }else{
-                 allOrder = adminService.queryAllOrderByPaystatu2(payStatu,storeId);
             }
-        }
-        for(int i=0 ; i< allOrder.size();i++){
+        }else {
+            List<StoreInfo> si  =  adminService.queryStoreInfoByPhone(storePhone);
+            if(payStatu<0){
+                allOrder = adminService.queryAllOrderByStoreId(si.get(0).storeId);
+            }else{
+                allOrder = adminService.queryAllOrderByPaystatu2(payStatu,si.get(0).storeId);
+            }
 
+
+        }
+
+        for(int i=0 ; i< allOrder.size();i++){
+            List<StoreInfo> storeInfos  = adminService.queryStoreInfoById(allOrder.get(i).storeId);
             List<CarType> car = adminService.queryCarListById(allOrder.get(i).carId );
             allOrder.get(i).setStoreInfos(storeInfos);
             allOrder.get(i).setCarTypes(car);
         }
         return new RespEntity(RespCode.SUCCESS, allOrder);
-
-       /* if(userType == 1){
-
-        }else{
-            List ln = new ArrayList();
-            return new RespEntity(RespCode.SUCCESS, ln);
-        }*/
     }
 
     /**确认订单**/
